@@ -34,14 +34,12 @@ gpio.setmode(gpio.BCM)
 gpio.setup(17, gpio.OUT)
 
 while True:
-	if ser.in_waiting > 0:
-		line = ser.readline().decode('utf-8').rstrip()
-		print(line)
-		if cut == '0':
-			sio.emit('send',line)
-	if cut == '1':
-		gpio.output(17, gpio.HIGH)
-		time.sleep(1)
-		gpio.output(17, gpio.LOW)
-		time.sleep(1)
-		cut = '0'
+    if ser.in_waiting > 0:
+        line = ser.readline().decode('utf-8').rstrip()
+        print(line)
+        sio.emit('send',line)
+        if line == '1':
+            gpio.output(17, gpio.HIGH)
+            time.sleep(0.5)
+            gpio.output(17, gpio.LOW)
+            time.sleep(0.5)
